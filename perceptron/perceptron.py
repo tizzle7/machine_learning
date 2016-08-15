@@ -54,7 +54,7 @@ class Perceptron(object):
         using the current weight attribute.
 
         Arguemts:
-        x -- data vector for one sample or matrix containing data for several
+        x -- data vector for one sample or matrix containing features of several
              samples
         """
         return np.dot(x, self.w_[1:]) + self.w_[0]
@@ -65,7 +65,7 @@ class Perceptron(object):
         the predict method can be used to predict class labels of new data.
         
         Arguments:
-        x -- data vector for one sample or matrix containing data for several
+        x -- data vector for one sample or matrix containing features of several
              samples
         """
         return np.where(self.calculate_net_input(x) >= 0, 1, -1)

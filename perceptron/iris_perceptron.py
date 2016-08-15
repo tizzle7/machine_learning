@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from perceptron import Perceptron
+from plot_tools import plot_decision_regions
 
 data = pd.read_csv("iris.data", header=None)
 
@@ -42,7 +43,7 @@ ax.legend(loc="upper left")
 
 # train the perceptron classifier
 iris_ppn = Perceptron()
-iris_ppn.fit(X.as_matrix(), y)
+iris_ppn.fit(X.values, y)
 
 # plot the numbers of errors for each perceptron iteration
 fig2 = plt.figure()
@@ -52,7 +53,10 @@ ax.plot(range(1, iris_ppn.n_iterations + 1), iris_ppn.errors_, marker="o")
 
 ax.set(xlabel="Iteration", ylabel="Number of missclassifications")
 
+# plot the decision boundaries for the 2D dataset
+fig3, ax = plot_decision_regions(X.values, y.values, iris_ppn)
 
+ax.set(xlabel="sepal length [cm]", ylabel= "petal length [cm]")
+ax.legend(loc="upper left")
 
 plt.show()
-
