@@ -36,16 +36,38 @@ iris_ada1.fit(X.values, y.values)
 iris_ada2 = Adaline(n_iterations=10, eta=0.0001)
 iris_ada2.fit(X.values, y.values)
 
-fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 6))
+fig1, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 6))
 
 ax[0].plot(range(1, iris_ada1.n_iterations + 1), np.log10(iris_ada1.cost_),
            marker="o")
-ax[0].set(xlabel="Epochs", ylabel="log(SSE)",
+ax[0].set(xlabel="Iterations", ylabel="log(SSE)",
           title="Adaline - Learning rate 0.01")
 
 ax[1].plot(range(1, iris_ada2.n_iterations + 1), iris_ada2.cost_,
            marker="o")
-ax[1].set(xlabel="Epochs", ylabel="log(SSE)",
+ax[1].set(xlabel="Iterations", ylabel="SSE",
           title="Adaline - Learning rate 0.0001")
+
+# standardize the features to increase the performance of the gradient descent
+# convergence method, convert data points to normal distribution
+X_std = np.copy(X.values)
+X_std[:, 0] = (X.values[:, 0] - X.values[:, 0].mean()) / X.values[:, 0].std()
+X_std[:, 1] = (X.values[:, 1] - X.values[:, 1].mean()) / X.values[:, 1].std()
+
+# train Adaline classifier on the standardized data using a learning rate of
+# 0.01, plot the change of the cost function over the iterations and show the
+# decision regions
+iris_ada = Adaline(n_iterations=15, eta=0.01)
+iris_ada.fit(X_std, y.values)
+
+fig2, ax = plot_decision_regions(X_std, y.values, iris_ada)
+ax.set(xlabel="sepal length [standardized]",
+          ylabel="petal length [standardized]", title="Adaline - Gradient descent")
+ax.legend(loc="upper left")
+
+fig3, ax = plt.subplots(nrows=1, ncols=1)
+ax.plot(range(1, iris_ada.n_iterations + 1), iris_ada.cost_, marker="o")
+ax.set(xlabel="Iterations", ylabel="SSE", xlim=(1, iris_ada.n_iterations),
+       title="Adaline - Learning rate 0.01, standardized")
 
 plt.show()

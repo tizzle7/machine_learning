@@ -53,7 +53,7 @@ ax = fig2.add_subplot(1, 1, 1)
 
 ax.plot(range(1, iris_ppn.n_iterations + 1), iris_ppn.errors_, marker="o")
 
-ax.set(xlabel="Iteration", ylabel="Number of missclassifications")
+ax.set(xlabel="Iterations", ylabel="Number of missclassifications")
 
 # plot the decision boundaries for the 2D dataset
 fig3, ax = plot_decision_regions(X.values, y.values, iris_ppn)
