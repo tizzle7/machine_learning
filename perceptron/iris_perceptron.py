@@ -1,6 +1,8 @@
 # iris_perceptron.py
 
 # dataset from https://archive.ics.uci.edu/ml/machine-learning-databases/iris/
+import sys
+sys.path.append("/home/titian/Desktop/machine_learning")
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,7 +45,7 @@ ax.legend(loc="upper left")
 
 # train the perceptron classifier
 iris_ppn = Perceptron()
-iris_ppn.fit(X.values, y)
+iris_ppn.fit(X.values, y.values)
 
 # plot the numbers of errors for each perceptron iteration
 fig2 = plt.figure()

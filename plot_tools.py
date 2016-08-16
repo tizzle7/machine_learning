@@ -12,7 +12,11 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     X -- matrix containing features of several samples
     y -- target values for each sample in an array
     classifier -- fitted Perceptron classifier
-    resolution --
+    resolution -- resolution for the colormap grid
+
+    Returns:
+    fig -- created figure object
+    ax -- created ax object
     """
     # create figure and axe objects
     fig = plt.figure()
