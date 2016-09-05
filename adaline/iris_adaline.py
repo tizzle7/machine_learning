@@ -7,7 +7,7 @@ sys.path.append("/home/titian/Desktop/machine_learning")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from adaline import Adaline
+from adaline import AdalineGD
 from plot_tools import plot_decision_regions
 
 data = pd.read_csv("iris.data", header=None)
@@ -30,10 +30,10 @@ y = data["Class label"]
 
 # create a plot of the cost function against the iteration number for learning
 # rates of 0.01 and 0.0001
-iris_ada1 = Adaline(n_iterations=10, eta=0.01)
+iris_ada1 = AdalineGD(n_iterations=10, eta=0.01)
 iris_ada1.fit(X.values, y.values)
 
-iris_ada2 = Adaline(n_iterations=10, eta=0.0001)
+iris_ada2 = AdalineGD(n_iterations=10, eta=0.0001)
 iris_ada2.fit(X.values, y.values)
 
 fig1, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 6))
@@ -57,7 +57,7 @@ X_std[:, 1] = (X.values[:, 1] - X.values[:, 1].mean()) / X.values[:, 1].std()
 # train Adaline classifier on the standardized data using a learning rate of
 # 0.01, plot the change of the cost function over the iterations and show the
 # decision regions
-iris_ada = Adaline(n_iterations=15, eta=0.01)
+iris_ada = AdalineGD(n_iterations=15, eta=0.01)
 iris_ada.fit(X_std, y.values)
 
 fig2, ax = plot_decision_regions(X_std, y.values, iris_ada)

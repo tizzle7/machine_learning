@@ -2,9 +2,10 @@
 
 import numpy as np
 
-class Adaline(object):
+class AdalineGD(object):
     """Implementation of an adaptive linear neuron classifier for two-class
-    classification.
+    classification fitting the weights by minimizing the cost function via
+    gradient descent.
 
     Arguments:
     eta -- learning rate between 0 and 1
