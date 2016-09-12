@@ -7,7 +7,7 @@ sys.path.append("/home/titian/Desktop/machine_learning")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from adaline import AdalineGD
+from adaline import AdalineGD, AdalineSGD
 from plot_tools import plot_decision_regions
 
 data = pd.read_csv("iris.data", header=None)
@@ -57,17 +57,35 @@ X_std[:, 1] = (X.values[:, 1] - X.values[:, 1].mean()) / X.values[:, 1].std()
 # train Adaline classifier on the standardized data using a learning rate of
 # 0.01, plot the change of the cost function over the iterations and show the
 # decision regions
-iris_ada = AdalineGD(n_iterations=15, eta=0.01)
-iris_ada.fit(X_std, y.values)
+iris_ada3 = AdalineGD(n_iterations=15, eta=0.01)
+iris_ada3.fit(X_std, y.values)
 
-fig2, ax = plot_decision_regions(X_std, y.values, iris_ada)
-ax.set(xlabel="sepal length [standardized]",
-          ylabel="petal length [standardized]", title="Adaline - Gradient descent")
+fig2, ax = plot_decision_regions(X_std, y.values, iris_ada3)
+ax.set(xlabel="Sepal length [standardized]",
+       ylabel="Petal length [standardized]",
+       title="AdalineGD")
 ax.legend(loc="upper left")
 
 fig3, ax = plt.subplots(nrows=1, ncols=1)
-ax.plot(range(1, iris_ada.n_iterations + 1), iris_ada.cost_, marker="o")
-ax.set(xlabel="Iterations", ylabel="SSE", xlim=(1, iris_ada.n_iterations),
-       title="Adaline - Learning rate 0.01, standardized")
+ax.plot(range(1, iris_ada3.n_iterations + 1), iris_ada3.cost_, marker="o")
+ax.set(xlabel="Iterations", ylabel="SSE", xlim=(1, iris_ada3.n_iterations),
+       title="AdalineGD - Learning rate 0.01, standardized")
+
+# show the decision regions for thestochastic gradient descent Adaline
+# classifier
+iris_ada4 = AdalineSGD(n_iterations=15, eta=0.01, random_state=1)
+iris_ada4.fit(X_std, y.values)
+fig4, ax = plot_decision_regions(X_std, y.values, iris_ada4)
+ax.set(xlabel="Sepal length [standardized]",
+       ylabel="Petal length [standardized]",
+       title="AdalineSGD")
+ax.legend(loc="upper left")
+
+# plot the change of the cost function over the iterations for the trained
+# SGDAdaline object
+fig5, ax = plt.subplots(nrows=1, ncols=1)
+ax.plot(range(1, iris_ada4.n_iterations + 1), iris_ada4.cost_, marker="o")
+ax.set(xlabel="Iterations", ylabel="SSE",
+       title="AdalineSGD - Learning rate 0.01, standardized")
 
 plt.show()

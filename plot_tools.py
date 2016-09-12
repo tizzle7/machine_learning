@@ -4,14 +4,15 @@ from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_decision_regions(X, y, classifier, resolution=0.02):
+def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
     """Visualize the decision boundaries of a perceptron classifier for
     2D datasets.
 
     Arguements:
-    X -- matrix containing features of several samples
+    X -- matrix containing the two features of several samples
     y -- target values for each sample in an array
     classifier -- fitted Perceptron classifier
+    test_idx -- indices of the samples that should be highlighted in the plot
     resolution -- resolution for the colormap grid
 
     Returns:
@@ -45,11 +46,18 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     ax.contourf(xx1, xx2, Z, alpha=0.4, cmap=cmap)
     ax.set(xlim=(xx1.min(), xx1.max()), ylim=(xx2.min(), xx2.max()))
 
-    # plot the data points
+    # plot all the data points
     for i, label in enumerate(np.unique(y)):
         ax.scatter(X[y == label, 0], X[y == label, 1], alpha=0.8,
                     c=cmap(i), marker=markers[i], label=label)
 
+    # highlight test samples
+    if test_idx:
+        X_test, y_test = X[test_idx, :], y[test_idx]
+
+        ax.scatter(X_test[:, 0], X_test[:, 1], c="", alpha=1.0, linewidth=1,
+                   marker="o", s=55, label="test set")
+        
     return fig, ax
     
     
